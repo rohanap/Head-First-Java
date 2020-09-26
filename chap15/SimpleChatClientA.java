@@ -1,17 +1,31 @@
-package chap15;
-import java.io.*;
-import java.net.*;
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.chap15;
 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 
-public class SimpleChatClientA
-{
+/**
+ *
+ * @author rohan
+ */
+public class SimpleChatClientA {
+
     JTextField outgoing;
     PrintWriter writer;
     Socket sock;
-    
+
     public void go() {
         JFrame frame = new JFrame("Ludicrously Simple Chat Client");
         JPanel mainPanel = new JPanel();
@@ -24,36 +38,33 @@ public class SimpleChatClientA
         setUpNetworking();
         frame.setSize(400, 500);
         frame.setVisible(true);
-        
     }
-    
+
     private void setUpNetworking() {
         try {
             sock = new Socket("127.0.0.1", 5000);
             writer = new PrintWriter(sock.getOutputStream());
-            System.out.println("networking established");
-        }
-        catch(IOException ex)
-        {
+            System.out.println("networking eastablished");
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
-    
+
     public class SendButtonListener implements ActionListener {
+
         public void actionPerformed(ActionEvent ev) {
             try {
                 writer.println(outgoing.getText());
                 writer.flush();
-                
-            }
-            catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
             outgoing.setText("");
             outgoing.requestFocus();
         }
     }
-    
+
     public static void main(String[] args) {
         new SimpleChatClientA().go();
     }

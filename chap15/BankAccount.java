@@ -9,18 +9,15 @@ package com.chap15;
  *
  * @author rohan
  */
-public class MyRunnable implements Runnable{
-    
-    public void run(){
-        go();
+class BankAccount {
+
+    private int balance = 100;
+
+    public int getBalance() {
+        return balance;
     }
-    
-    public void go(){
-        doMore();
+
+    public void withdraw(int amount) {
+        balance = balance - amount;
     }
-    
-    public void doMore(){
-        System.out.println("top o' the stack");
-    }
-    
 }

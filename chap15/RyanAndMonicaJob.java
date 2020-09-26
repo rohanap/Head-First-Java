@@ -1,9 +1,18 @@
-package chap15;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.chap15;
 
-public class RyanAndMonicaJob implements Runnable
-{
+/**
+ *
+ * @author rohan
+ */
+public class RyanAndMonicaJob implements Runnable {
+
     private BankAccount account = new BankAccount();
-    
+
     public static void main(String[] args) {
         RyanAndMonicaJob theJob = new RyanAndMonicaJob();
         Thread one = new Thread(theJob);
@@ -13,48 +22,30 @@ public class RyanAndMonicaJob implements Runnable
         one.start();
         two.start();
     }
-    
-    public void run()
-    {
-        for (int x = 0; x < 10; x++) {
-            makeWithdrawal(10);
-            if (account.getBalance() < 0)
-            {
+
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+            makeWithdrawl(10);
+            if (account.getBalance() < 0) {
                 System.out.println("Overdrawn!");
             }
         }
     }
-//  to demonstrate the "overdrawn" error remove the "synchronized" modifier
-    private synchronized void makeWithdrawal(int amount)
-    {
-        if (account.getBalance() >= amount)
-        {
-            System.out.println(Thread.currentThread().getName() + " is about to withdrawal");
+
+    private synchronized void makeWithdrawl(int amount) {
+        if (account.getBalance() >= amount) {
+            System.out.println(Thread.currentThread().getName() + " is about to withdraw");
             try {
                 System.out.println(Thread.currentThread().getName() + " is going to sleep");
                 Thread.sleep(500);
-            } catch (InterruptedException ex) { ex.printStackTrace(); }
-            System.out.println(Thread.currentThread().getName() + " woke up");
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName() + " woke up.");
             account.withdraw(amount);
-            System.out.println(Thread.currentThread().getName() + " completes the withdrawal");
-        }
-        else
-        {
+            System.out.println(Thread.currentThread().getName() + " complates the withdrawl");
+        } else {
             System.out.println("Sorry, not enough for " + Thread.currentThread().getName());
         }
-    }
-
-}
-
-
-class BankAccount {
-    private int balance = 100;
-    
-    public int getBalance () {
-        return balance;
-    }
-    
-    public void withdraw(int amount) {
-        balance = balance - amount;
     }
 }
